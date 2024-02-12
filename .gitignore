@@ -4,3 +4,5 @@ logs/*
 .cache/
 __pycache__/
 outputs
+build
+SettlementChat.egg-info

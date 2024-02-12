@@ -80,7 +80,8 @@ class SettlementChat:
             system_message=system_message,
             llm_config=oai_llm_config,
             human_input_mode="NEVER",
-            retrieve_config=retrieve_config
+            retrieve_config=retrieve_config,
+            code_execution_config=False
         )
 
         self.bard_pm = RetrieveUserProxyAgent(
@@ -89,7 +90,8 @@ class SettlementChat:
             system_message=system_message,
             llm_config=bard_llm_config,
             human_input_mode="NEVER",
-            retrieve_config=retrieve_config
+            retrieve_config=retrieve_config,
+            code_execution_config=False
         )
 
         groupchat = autogen.GroupChat(

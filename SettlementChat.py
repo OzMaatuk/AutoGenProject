@@ -45,7 +45,7 @@ class SettlementChat:
         return False
 
     def run(self, message):
-        filter_bard_dict = {"model": ["bard"]}
+        filter_bard_dict = {"model": ["gemini"]}
         bard_config_list = autogen.config_list_from_json(
             env_or_file=self.config_file, filter_dict=filter_bard_dict
         )
@@ -75,7 +75,7 @@ class SettlementChat:
             retrieve_config["docs_path"] = self.docs_path
 
         self.oai_pm = RetrieveUserProxyAgent(
-            name="Openai_product_manager",
+            name="Openai_agent",
             is_termination_msg=self.termination_msg,
             system_message=system_message,
             llm_config=oai_llm_config,
@@ -84,7 +84,7 @@ class SettlementChat:
         )
 
         self.bard_pm = RetrieveUserProxyAgent(
-            name="Google_product_manager",
+            name="Google_agent",
             is_termination_msg=self.termination_msg,
             system_message=system_message,
             llm_config=bard_llm_config,
@@ -105,10 +105,12 @@ class SettlementChat:
         return self.chat_messages
     
     def get_summary(self):
-        PROMPT = "Please provide an informative detailed summary of the following: "
+        PRE_PROMPT = "Please provide an informative detailed summary of the following: "
+        POST_PROMPT = "\nDo not miss any details, make your summary accurate clear and well defined."
+        PROMPT = PRE_PROMPT + self.chat_messages + POST_PROMPT
         NAME = "Summerizing agent"
         self.bard_pm.reset()
         userproxyagent = autogen.UserProxyAgent(name=NAME, human_input_mode="NEVER", max_consecutive_auto_reply=1)
-        userproxyagent.initiate_chat(self.bard_pm, message=PROMPT + self.chat_messages)
+        userproxyagent.initiate_chat(self.bard_pm, message=PROMPT)
         product_details = sorted(userproxyagent.chat_messages.items())[0][1][1]['content']
         return product_details

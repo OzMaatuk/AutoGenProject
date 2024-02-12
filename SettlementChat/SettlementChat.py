@@ -3,7 +3,7 @@ import sys
 from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
 
 class SettlementChat:
-    def __init__(self, log_file, config_file, system_message_file, max_round=12, docs_path=None):
+    def __init__(self, log_file, system_message_file, config_file="CONFIG_LIST.json", max_round=12, docs_path=None):
         self.log_file = log_file
         self.config_file = config_file
         self.system_message_file = system_message_file

@@ -112,7 +112,25 @@ class SettlementChat:
         PROMPT = PRE_PROMPT + self.chat_messages + POST_PROMPT
         NAME = "Summerizing agent"
         self.bard_pm.reset()
-        userproxyagent = autogen.UserProxyAgent(name=NAME, human_input_mode="NEVER", max_consecutive_auto_reply=1)
+        userproxyagent = autogen.UserProxyAgent(name=NAME,
+                                                human_input_mode="NEVER",
+                                                max_consecutive_auto_reply=1)
         userproxyagent.initiate_chat(self.bard_pm, message=PROMPT)
         product_details = sorted(userproxyagent.chat_messages.items())[0][1][1]['content']
         return product_details
+    
+    def get_code(self):
+        PRE_PROMPT = "Please provide concluded code result of the following conversation: "
+        POST_PROMPT = """\nClear the conversation from duplications,
+                            collect all code sections, and write them in the right order,
+                            clear and well defined."""
+        PROMPT = PRE_PROMPT + self.chat_messages + POST_PROMPT
+        NAME = "Code agent"
+        self.bard_pm.reset()
+        userproxyagent = autogen.UserProxyAgent(name=NAME,
+                                                human_input_mode="NEVER",
+                                                max_consecutive_auto_reply=1,
+                                                code_execution_config=False)
+        userproxyagent.initiate_chat(self.bard_pm, message=PROMPT)
+        product_code = sorted(userproxyagent.chat_messages.items())[0][1][1]['content']
+        return product_code

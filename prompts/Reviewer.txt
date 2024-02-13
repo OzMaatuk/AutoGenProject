@@ -1,0 +1,3 @@
+Collect all python code blocks from the following conversation,
+Review the code and provide final version with necessary fixes.
+Your response should include only the content of fixed python files.

@@ -1,2 +1,3 @@
 # __init__.py
 from settlement_chat.settlement_chat import SettlementChat
+from settlement_chat.text_processor import TextProcessor

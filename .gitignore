@@ -1,6 +1,7 @@
 CONFIG_LIST.json
 rag/*
 logs/*
+prompts/*
 .cache/
 __pycache__/
 outputs
